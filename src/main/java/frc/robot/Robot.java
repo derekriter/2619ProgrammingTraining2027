@@ -4,11 +4,27 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 public class Robot extends TimedRobot {
     
-    public Robot() {}
+    private final TalonSRX motor;
+    
+    private final Joystick joystick;
+    
+    public Robot() {
+        motor = new TalonSRX(2);
+        motor.configContinuousCurrentLimit(20);
+        motor.configPeakCurrentLimit(0);
+        motor.setNeutralMode(NeutralMode.Coast);
+        
+        joystick = new Joystick(0);
+    }
     
     @Override
     public void robotPeriodic() {}
@@ -23,10 +39,17 @@ public class Robot extends TimedRobot {
     public void teleopInit() {}
     
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double joystickValue = -joystick.getY();
+        double safeJoystickValue = Math.max(Math.min(joystickValue, 1), -1);
+        
+        motor.set(TalonSRXControlMode.PercentOutput, safeJoystickValue);
+    }
     
     @Override
-    public void disabledInit() {}
+    public void disabledInit() {
+        motor.neutralOutput();
+    }
     
     @Override
     public void disabledPeriodic() {}
