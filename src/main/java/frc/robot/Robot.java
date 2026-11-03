@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
     
     @Override
     public void teleopPeriodic() {
-        double joystickValue = -joystick.getY();
+        double joystickValue = -joystick.getY() * 50;
         double safeJoystickValue = Math.max(Math.min(joystickValue, 1), -1);
         
         motor.set(TalonSRXControlMode.PercentOutput, safeJoystickValue);
