@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
@@ -22,6 +23,7 @@ public class Robot extends TimedRobot {
         motor.configContinuousCurrentLimit(20);
         motor.configPeakCurrentLimit(0);
         motor.setNeutralMode(NeutralMode.Coast);
+        motor.setInverted(false);
         
         joystick = new Joystick(0);
     }
